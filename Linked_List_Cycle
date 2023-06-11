@@ -1,0 +1,39 @@
+// link: https://leetcode.com/problems/linked-list-cycle/description/
+
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+
+//1st method brute force
+
+func hasCycle(head *ListNode) bool {
+	hash := make(map[*ListNode]int)
+	for head != nil {
+		if _, ok := hash[head]; ok {
+			return true
+		}
+		hash[head] = 0
+		head = head.Next
+	}
+	return false
+}
+
+//2nd method
+// Fast and slow pointer technique, so no extra space used
+
+func hasCycle(head *ListNode) bool {
+	fast, slow := head, head
+	for fast != nil && fast.Next != nil && fast.Next.Next != nil {
+		fast = fast.Next.Next
+		slow = slow.Next
+		if fast == slow {
+			return true
+		}
+	}
+	return false
+}
+
